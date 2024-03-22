@@ -26,15 +26,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.algartech.weatherapp.ui.theme.Purple40
 import com.algartech.weatherapp.ui.theme.Purple80
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
-fun MapScreen() {
+fun MapScreen(mapViewModel: MapViewModel = hiltViewModel()) {
     var query by remember { mutableStateOf(TextFieldValue("Buscar")) }
     Box(
         modifier = Modifier
@@ -64,8 +64,6 @@ fun MapScreen() {
             }, shape = RoundedCornerShape(50.dp),
             colors = TextFieldDefaults.textFieldColors(containerColor = Purple80)
         )
-
-
 
 
     }
