@@ -1,26 +1,6 @@
 package com.algartech.weatherapp.presentation
 
 /*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
-
 // Definimos la interfaz para la API de OpenWeatherMap
 interface WeatherService {
     @GET("weather")
@@ -28,42 +8,86 @@ interface WeatherService {
         @Query("q") city: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String
-    ): WeatherResponse
+    ): DataWeather
 }
 
 // Definimos el modelo de datos para la respuesta de la API
-data class WeatherResponse(
-    val main: Main
-)
 
+data class DataWeather(
+    @SerializedName("name") val name: String,
+    @SerializedName("weather") val weather: List<Weather>,
+    @SerializedName("main") val main: Main,
+    @SerializedName("wind") val wind: Wind,
+    @SerializedName("coord") val coord: Coord,
+)
+data class Weather(
+    @SerializedName("description") val description: String,
+    @SerializedName("main") val main: String
+)
 data class Main(
-    val temp: Double
+    @SerializedName("feels_like") val feels_like: Double,
+    @SerializedName("grnd_level") val grnd_level: Int,
+    @SerializedName("humidity") val humidity: Int,
+    @SerializedName("pressure") val pressure: Int,
+    @SerializedName("sea_level") val sea_level: Int,
+    @SerializedName("temp") val temp: Double,
+    @SerializedName("temp_max") val temp_max: Double,
+    @SerializedName("temp_min") val temp_min: Double
+)
+data class Wind(
+    @SerializedName("deg") val deg: Int,
+    @SerializedName("gust") val gust: Double,
+    @SerializedName("speed") val speed: Double
+)
+data class Coord(
+    @SerializedName("lat") val lat: Double,
+    @SerializedName("lon") val lon: Double
 )
 
-// Definimos el ViewModel para manejar los datos meteorológicos
-class WeatherViewModel : ViewModel() {
-    var weatherData by mutableStateOf<String>("")
 
-    fun fetchWeatherData(city: String) {
-        viewModelScope.launch {
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://api.openweathermap.org/data/2.5/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-            val service = retrofit.create(WeatherService::class.java)
-            val response = service.getWeather(city, "b6414ca4be408a45c7d8cc5c840bd066", "metric")
-
-            weatherData = "Temperature: ${response.main.temp} °C"
-        }
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkConection {
+    @Singleton
+    @Provides
+    fun provideWeatherService(): com.algartech.weatherapp.data.network.WeatherService {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(WeatherService::class.java)
     }
 }
 
+// Definimos el ViewModel para manejar los datos meteorológicos
+@HiltViewModel
+class MapViewModel @Inject constructor(
+    private val weatherService: WeatherService,
+    @ApplicationContext private val context: Context
+) : ViewModel() {
+
+    private val _weatherData = MutableStateFlow<DataWeather?>(null)
+    val weatherData: StateFlow<DataWeather?> = _weatherData
+
+    fun getWeatherData(city: String) {
+        viewModelScope.launch {
+            val apiKey = context.getString(R.string.open_wather_key)
+            try {
+                val response = weatherService.getWeather(city, apiKey, "metric")
+                _weatherData.value = response
+                //Log.i("RRRRR", _weatherData.toString())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
 // Componente de UI principal
 @Composable
-fun WeatherApp(viewModel: WeatherViewModel = viewModel()) {
+fun WeatherApp(viewModel: MapViewModel = viewModel()) {
     val context = LocalContext.current
     var city by remember { mutableStateOf("") }
+
 
     Column(
         modifier = Modifier
@@ -80,17 +104,14 @@ fun WeatherApp(viewModel: WeatherViewModel = viewModel()) {
         )
 
         Button(
-            onClick = { viewModel.fetchWeatherData(city) },
+            onClick = { viewModel.getWeatherData(city) },
             modifier = Modifier.padding(bottom = 16.dp)
         ) {
             Text("Get Weather")
         }
 
         // Se muestra la información meteorológica
-        Text(
-            text = viewModel.weatherData,
-            textAlign = TextAlign.Center
-        )
+
     }
 
 }
@@ -98,6 +119,6 @@ fun WeatherApp(viewModel: WeatherViewModel = viewModel()) {
 // Función principal
 @Composable
 fun WeatherAppContent() {
-    val viewModel: WeatherViewModel = viewModel()
+    val viewModel: MapViewModel = viewModel()
     WeatherApp(viewModel = viewModel)
 }*/

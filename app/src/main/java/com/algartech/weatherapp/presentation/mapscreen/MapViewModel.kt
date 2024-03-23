@@ -1,4 +1,4 @@
-package com.algartech.weatherapp.presentation
+package com.algartech.weatherapp.presentation.mapscreen
 
 import android.content.Context
 import android.util.Log
@@ -26,7 +26,7 @@ class MapViewModel @Inject constructor(
 
     fun getWeatherData(city: String) {
         viewModelScope.launch {
-            val apiKey = context.getString(R.string.open_wather_key)
+            val apiKey = context.getString(R.string.open_weather_key)
             try {
                 val response = weatherService.getWeather(city, apiKey, "metric")
                 _weatherData.value = response
