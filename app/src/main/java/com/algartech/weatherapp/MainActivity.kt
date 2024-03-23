@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import com.algartech.weatherapp.presentation.MapScreen
 import com.algartech.weatherapp.ui.theme.WeatherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -23,6 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    //WeatherAppContent()
                     MapScreen()
                 }
             }
