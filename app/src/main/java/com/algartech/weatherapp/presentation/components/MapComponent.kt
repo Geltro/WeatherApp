@@ -1,8 +1,11 @@
 package com.algartech.weatherapp.presentation.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -69,25 +72,31 @@ private fun WeatherInfo(name: String, weatherData: Weather?, mainData: Main, win
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 4.dp)
         )
-        EditableText(text = "Weather", tile = true)
-        weatherData?.let { weather ->
-            EditableText(text = weather.main)
-            EditableText(text = weather.description)
+        Row {
+            Column {
+                EditableText(text = "Weather", tile = true)
+                weatherData?.let { weather ->
+                    EditableText(text = weather.main)
+                    EditableText(text = weather.description)
+                }
+                EditableText(text = "Ground Level: ${mainData.grnd_level}")
+                EditableText(text = "Humidity: ${mainData.humidity}")
+                EditableText(text = "Pressure: ${mainData.pressure}")
+                EditableText(text = "Sea Level: ${mainData.sea_level}")
+            }
+            Spacer(modifier = Modifier.size(8.dp))
+            Column {
+                EditableText(text = "Temp", true)
+                EditableText(text = "Temperature: ${mainData.temp}")
+                EditableText(text = "Max Temperature: ${mainData.temp_max}")
+                EditableText(text = "Min Temperature: ${mainData.temp_min}")
+                EditableText(text = "Feels like: ${mainData.feels_like}")
+
+                EditableText(text = "Wind", true)
+                EditableText(text = "Degree: ${windData.deg}")
+                EditableText(text = "Gust: ${windData.gust}")
+                EditableText(text = "Speed: ${windData.speed}")
+            }
         }
-        EditableText(text = "Ground Level: ${mainData.grnd_level}")
-        EditableText(text = "Humidity: ${mainData.humidity}")
-        EditableText(text = "Pressure: ${mainData.pressure}")
-        EditableText(text = "Sea Level: ${mainData.sea_level}")
-
-        EditableText(text = "Temp", true)
-        EditableText(text = "Temperature: ${mainData.temp}")
-        EditableText(text = "Max Temperature: ${mainData.temp_max}")
-        EditableText(text = "Min Temperature: ${mainData.temp_min}")
-        EditableText(text = "Feels like: ${mainData.feels_like}")
-
-        EditableText(text = "Wind", true)
-        EditableText(text = "Degree: ${windData.deg}")
-        EditableText(text = "Gust: ${windData.gust}")
-        EditableText(text = "Speed: ${windData.speed}")
     }
 }
