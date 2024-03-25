@@ -2,10 +2,8 @@ package com.algartech.weatherapp.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,10 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.algartech.weatherapp.data.model.DataWeather
-import com.algartech.weatherapp.data.model.Main
-import com.algartech.weatherapp.data.model.Weather
-import com.algartech.weatherapp.data.model.Wind
+import com.algartech.weatherapp.data.model.DataWeatherModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -29,7 +24,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun MapComponent(data: DataWeather) {
+fun MapComponent(data: DataWeatherModel) {
     val positionState = rememberCameraPositionState {
         // Inicializa la posición de la cámara al crear el estado
         position = CameraPosition(LatLng(data.coord.lat, data.coord.lon), 12f, 0f, 0f)
@@ -37,7 +32,14 @@ fun MapComponent(data: DataWeather) {
 
     // Animar la cámara cuando cambia la posición
     LaunchedEffect(positionState.position) {
-        positionState.animate(CameraUpdateFactory.newLatLng(LatLng(data.coord.lat, data.coord.lon)))
+        positionState.animate(
+            CameraUpdateFactory.newLatLng(
+                LatLng(
+                    data.coord.lat,
+                    data.coord.lon
+                )
+            )
+        )
     }
 
     GoogleMap(
@@ -52,9 +54,9 @@ fun MapComponent(data: DataWeather) {
             content = {
                 WeatherInfo(
                     name = data.name,
-                    weatherData = data.weather.firstOrNull(),
-                    mainData = data.main,
-                    windData = data.wind
+                    /* weatherData = data.weather.firstOrNull(),
+                     mainData = data.main,
+                     windData = data.wind*/
                 )
             }
         )
@@ -62,7 +64,9 @@ fun MapComponent(data: DataWeather) {
 }
 
 @Composable
-private fun WeatherInfo(name: String, weatherData: Weather?, mainData: Main, windData: Wind) {
+private fun WeatherInfo(
+    name: String, /*weatherData: Weather?, mainData: Main, windData: Wind*/
+) {
     Column {
         Text(
             text = name,
@@ -72,7 +76,7 @@ private fun WeatherInfo(name: String, weatherData: Weather?, mainData: Main, win
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 4.dp)
         )
-        Row {
+        Row {/*
             Column {
                 EditableText(text = "Weather", tile = true)
                 weatherData?.let { weather ->
@@ -96,7 +100,7 @@ private fun WeatherInfo(name: String, weatherData: Weather?, mainData: Main, win
                 EditableText(text = "Degree: ${windData.deg}")
                 EditableText(text = "Gust: ${windData.gust}")
                 EditableText(text = "Speed: ${windData.speed}")
-            }
+            }*/
         }
     }
 }
