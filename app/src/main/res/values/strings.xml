@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <!--   weatherScreen-->
+    <string name="city">Ciudad</string>
+    <string name="search">Search</string>
+
+    <!--Weather Info    -->
+    <string name="google_map">Google Map</string>
+    <string name="weather">Weather</string>
+    <string name="ground_level">Ground Level:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="pressure">Pressure:</string>
+    <string name="sea_level">Sea Level:</string>
+    <string name="temp">Temp:</string>
+    <string name="temperature">Temperature:</string>
+    <string name="max_temperature">Max Temperature:</string>
+
+    <string name="min_temperature">Min Temperature::</string>
+    <string name="feels_like">Feels like:</string>
+    <string name="wind">Wind:</string>
+    <string name="degree">Degree:</string>
+    <string name="gust">Gust:</string>
+    <string name="speed">Speed:</string>
+
+
+
+
+
+
 </resources>

@@ -26,9 +26,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.algartech.weatherapp.R
 import com.algartech.weatherapp.presentation.components.MapComponent
 import com.algartech.weatherapp.ui.theme.Purple40
 import com.algartech.weatherapp.ui.theme.Purple80
@@ -59,13 +62,16 @@ fun MapScreen(
                 .padding(top = 20.dp, bottom = 20.dp, start = 20.dp, end = 20.dp),
             value = city,
             onValueChange = { city = it },
-            placeholder = { Text("Ciudad") },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            placeholder = { Text(stringResource(id = R.string.city)) },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            ),
             singleLine = true,
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
-                    contentDescription = "Search",
+                    contentDescription = stringResource(id = R.string.search),
                     modifier = Modifier.clickable {
                         mapViewModel.getWeatherData(city)
                     }

@@ -11,10 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.algartech.weatherapp.R
 import com.algartech.weatherapp.data.model.DataWeather
 import com.algartech.weatherapp.data.model.Main
 import com.algartech.weatherapp.data.model.Weather
@@ -43,7 +45,7 @@ fun MapComponent(data: DataWeather) {
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
         uiSettings = MapUiSettings(),
-        contentDescription = "Google Map",
+        contentDescription = stringResource(id = R.string.google_map),
         cameraPositionState = positionState
     ) {
         MarkerInfoWindowContent(
@@ -74,28 +76,28 @@ private fun WeatherInfo(name: String, weatherData: Weather?, mainData: Main, win
         )
         Row {
             Column {
-                EditableText(text = "Weather", tile = true)
+                EditableText(text = stringResource(id = R.string.weather), tile = true)
                 weatherData?.let { weather ->
                     EditableText(text = weather.main)
                     EditableText(text = weather.description)
                 }
-                EditableText(text = "Ground Level: ${mainData.grnd_level}")
-                EditableText(text = "Humidity: ${mainData.humidity}")
-                EditableText(text = "Pressure: ${mainData.pressure}")
-                EditableText(text = "Sea Level: ${mainData.sea_level}")
+                EditableText(text = stringResource(id = R.string.ground_level) + mainData.grnd_level)
+                EditableText(text = stringResource(id = R.string.humidity) + mainData.humidity)
+                EditableText(text = stringResource(id = R.string.pressure) + mainData.pressure)
+                EditableText(text = stringResource(id = R.string.sea_level) + mainData.sea_level)
             }
             Spacer(modifier = Modifier.size(8.dp))
             Column {
-                EditableText(text = "Temp", true)
-                EditableText(text = "Temperature: ${mainData.temp}")
-                EditableText(text = "Max Temperature: ${mainData.temp_max}")
-                EditableText(text = "Min Temperature: ${mainData.temp_min}")
-                EditableText(text = "Feels like: ${mainData.feels_like}")
+                EditableText(text = stringResource(id = R.string.temp), true)
+                EditableText(text = stringResource(id = R.string.temperature) + mainData.temp)
+                EditableText(text = stringResource(id = R.string.max_temperature) + mainData.temp_max)
+                EditableText(text = stringResource(id = R.string.min_temperature) + mainData.temp_min)
+                EditableText(text = stringResource(id = R.string.feels_like) + mainData.feels_like)
 
-                EditableText(text = "Wind", true)
-                EditableText(text = "Degree: ${windData.deg}")
-                EditableText(text = "Gust: ${windData.gust}")
-                EditableText(text = "Speed: ${windData.speed}")
+                EditableText(text = stringResource(id = R.string.wind), true)
+                EditableText(text = stringResource(id = R.string.degree) + windData.deg)
+                EditableText(text = stringResource(id = R.string.gust) + windData.gust)
+                EditableText(text = stringResource(id = R.string.speed) + windData.speed)
             }
         }
     }

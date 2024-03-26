@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.algartech.weatherapp.R
-import com.algartech.weatherapp.data.WeatherService
+import com.algartech.weatherapp.data.WeatherApi
 import com.algartech.weatherapp.data.model.DataWeather
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    private val weatherService: WeatherService,
+    private val weatherApi: WeatherApi,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -28,9 +28,9 @@ class MapViewModel @Inject constructor(
         viewModelScope.launch {
             val apiKey = context.getString(R.string.open_weather_key)
             try {
-                val response = weatherService.getWeather(city, apiKey, "metric")
+                val response = weatherApi.getWeather(city, apiKey, "metric")
                 _weatherData.value = response
-                Log.i("RRRRR", _weatherData.toString())
+                Log.i("DATA", _weatherData.toString())
                 //print("RRESULTTTT: ${response.weather}")
             } catch (e: Exception) {
                 // Manejar errores de solicitud

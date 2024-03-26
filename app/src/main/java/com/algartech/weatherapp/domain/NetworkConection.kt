@@ -1,12 +1,14 @@
 package com.algartech.weatherapp.domain
 
-import com.algartech.weatherapp.data.WeatherService
+import com.algartech.weatherapp.data.WeatherApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -14,35 +16,24 @@ import javax.inject.Singleton
 object NetworkConection {
     @Singleton
     @Provides
-    fun provideWeatherService(): WeatherService {
-        return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(WeatherService::class.java)
-    }
+    fun provideOkhttpClient(): OkHttpClient = OkHttpClient.Builder().apply {
+
+    }.build()
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(
+        httpClient: OkHttpClient = provideOkhttpClient()
+    ): Retrofit =
+        Retrofit.Builder().apply {
+            baseUrl(Constants.BASE_URL)
+            client(httpClient)
+            addConverterFactory(GsonConverterFactory.create())
+        }.build()
+
+
+    @Singleton
+    @Provides
+    fun provideWeatherService(retrofit: Retrofit = provideRetrofit()): WeatherApi =
+        retrofit.create(WeatherApi::class.java)
 }
-/*
-@Singleton
-@Provides
-fun provideOkhttpClient(): OkHttpClient = OkHttpClient.Builder().apply { }.build()
-
-@Singleton
-@Provides
-fun providesRetrofit(
-    httpClient: OkHttpClient = provideOkhttpClient()
-): Retrofit =
-    Retrofit.Builder().apply {
-        baseUrl(Constants.BASE_URL)
-        client(httpClient)
-        addConverterFactory(GsonConverterFactory.create())
-    }.build()*/
-
-/* val retrofit: WeatherService by lazy {
-     Retrofit
-         .Builder()
-         .baseUrl(Constants.BASE_URL)
-         .addConverterFactory(GsonConverterFactory.create())
-         .build()
-         .create(WeatherService::class.java)
- }*/
