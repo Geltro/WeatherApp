@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,7 +45,6 @@ fun MapScreen(
 ) {
     var city by remember { mutableStateOf("") }
     val weatherData by mapViewModel.weatherData.collectAsState()
-    //mapViewModel.getWeatherData("London")
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -59,7 +59,8 @@ fun MapScreen(
                 .fillMaxWidth()
                 .height(100.dp)
                 .background(Color.Transparent)
-                .padding(top = 20.dp, bottom = 20.dp, start = 20.dp, end = 20.dp),
+                .padding(top = 20.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                .testTag("outlinedTextField"),
             value = city,
             onValueChange = { city = it },
             placeholder = { Text(stringResource(id = R.string.city)) },

@@ -2,7 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="MapScreenTest">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="testGetWeatherData()">
+        <State />
+      </entry>
+      <entry key="testGetWeatherData_CallsViewModelWithCorrectCity()">
+        <State />
+      </entry>
+      <entry key="testMapScreenContent()">
+        <State />
+      </entry>
+      <entry key="testWeatherInfoContent()">
         <State />
       </entry>
     </value>
